@@ -5,7 +5,7 @@ from rest_framework import serializers
 class RecipeSerializer(serializers.ModelSerializer):
     """Recipe serializer."""
 
-    categories = serializers.JSONField(required=False)
+    categories = serializers.JSONField(required=True)
 
     class Meta:
         """Meta."""

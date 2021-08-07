@@ -4,6 +4,7 @@ from rest_framework import status
 from django.http.response import JsonResponse
 from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.recipe_serializer import RecipeSerializer
+from cocinaapp.db_paginators.recipe_paginator import RecipePaginator
 from cocinaapp.db_helpers.json_helpers import get_indexed_json
 import random
 
@@ -40,6 +41,7 @@ def recipe_list(request):
 
     if request.method == 'GET':
         recipes = Recipe.objects.all()
+        print("AAAAAA")
         recipe_serializer = RecipeSerializer(recipes, many=True)
         return JsonResponse(get_indexed_json(recipe_serializer.data), safe=False, status=status.HTTP_200_OK)
 
@@ -60,3 +62,39 @@ def random_recipe(request):
     random_recipe = random.choice(recipes)
     recipe_serializer = RecipeSerializer(random_recipe)
     return JsonResponse(recipe_serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def random_filter(request):
+    """Pick random recipe/s with filters."""
+
+    parameters = request.query_params
+    # Parametros:
+    # categoria
+    # ingredientes
+
+    recipes = Recipe.objects.all()
+    page_size = request.query_params.get('page_size', False)
+    if page_size:
+        recipe_paginator = RecipePaginator(page_size)
+        response = recipe_paginator.generate_response(recipes, RecipeSerializer, request)
+        return response
+    return JsonResponse({'error': 'The page_size must be in the path values.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def paginated_recipes(request):
+    """Pick random recipe/s with filters."""
+
+    parameters = request.query_params
+    # Parametros:
+    # categoria
+    # ingredientes
+
+    recipes = Recipe.objects.all()
+    page_size = request.query_params.get('page_size', False)
+    if page_size:
+        recipe_paginator = RecipePaginator(page_size)
+        response = recipe_paginator.generate_response(recipes, RecipeSerializer, request)
+        return response
+    return JsonResponse({'error': 'The page_size must be in the path values.'}, status=status.HTTP_400_BAD_REQUEST)
+
