@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+from cocinaapp.db_models.recipe import Recipe
