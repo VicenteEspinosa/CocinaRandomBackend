@@ -6,7 +6,9 @@ from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.recipe_serializer import RecipeSerializer
 from cocinaapp.db_paginators.recipe_paginator import RecipePaginator
 from cocinaapp.db_helpers.json_helpers import get_indexed_json
+from cocinaapp.db_helpers.recipe_helpers import filter_query
 import random
+from django.db.models import Q
 
 
 @api_view(['GET', 'PATCH', 'DELETE'])
@@ -35,13 +37,13 @@ def recipe_one(request, pk):
     except Recipe.DoesNotExist:
         return JsonResponse({'error': 'The recipe do not exist'}, status=status.HTTP_404_NOT_FOUND)
 
+
 @api_view(['GET', 'POST'])
 def recipe_list(request):
     """Show all recipes or post new."""
 
     if request.method == 'GET':
         recipes = Recipe.objects.all()
-        print("AAAAAA")
         recipe_serializer = RecipeSerializer(recipes, many=True)
         return JsonResponse(get_indexed_json(recipe_serializer.data), safe=False, status=status.HTTP_200_OK)
 
@@ -54,14 +56,17 @@ def recipe_list(request):
             return JsonResponse(recipe_serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(recipe_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def random_recipe(request):
     """Pick random recipe."""
 
-    recipes = list(Recipe.objects.all())
+    last_recipe = request.query_params.get('last', False)
+    recipes = list(Recipe.objects.filter(~Q(id=last_recipe)))
     random_recipe = random.choice(recipes)
     recipe_serializer = RecipeSerializer(random_recipe)
     return JsonResponse(recipe_serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def random_filter(request):
@@ -71,6 +76,7 @@ def random_filter(request):
     # Parametros:
     # categoria
     # ingredientes
+
 
     recipes = Recipe.objects.all()
     page_size = request.query_params.get('page_size', False)
@@ -90,7 +96,8 @@ def paginated_recipes(request):
     # categoria
     # ingredientes
 
-    recipes = Recipe.objects.all()
+    recipes = filter_query(request)
+    #recipes = Recipe.objects.all()
     page_size = request.query_params.get('page_size', False)
     if page_size:
         recipe_paginator = RecipePaginator(page_size)
