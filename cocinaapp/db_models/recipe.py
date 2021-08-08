@@ -6,5 +6,5 @@ class Recipe(models.Model):
 
     name = models.CharField(max_length=100)
     description = models.TextField()
-    categories = models.JSONField()
+    categories = models.JSONField() # Lista de strings
     image =  models.URLField()

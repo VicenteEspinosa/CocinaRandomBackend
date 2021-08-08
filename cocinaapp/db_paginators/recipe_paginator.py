@@ -27,7 +27,6 @@ class RecipePaginator(PageNumberPagination):
 
         data = serialized_page.data # add the get_indexed_json here
         return self.get_paginated_response(data)
-        return data
 
 
     def get_paginated_response(self, data):
