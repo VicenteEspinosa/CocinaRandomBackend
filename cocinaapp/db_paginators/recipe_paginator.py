@@ -13,8 +13,8 @@ class RecipePaginator(PageNumberPagination):
         self.last_page = 0 # The last page that you can access
 
 
-    def generate_response(self, query_set, serializer_obj, request):
-        recipe_count = Recipe.objects.all().count()
+    def generate_response(self, query_set, serializer_obj, request, length):
+        recipe_count = length
         self.last_page = math.ceil(recipe_count / int(self.page_size))
 
         try:
@@ -27,7 +27,6 @@ class RecipePaginator(PageNumberPagination):
 
         data = serialized_page.data # add the get_indexed_json here
         return self.get_paginated_response(data)
-        return data
 
 
     def get_paginated_response(self, data):
