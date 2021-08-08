@@ -79,7 +79,7 @@ def random_filter(request):
 
 
     recipes = Recipe.objects.all()
-    length = recipes.count()
+    length = len(recipes)
     page_size = request.query_params.get('page_size', False)
     if page_size:
         recipe_paginator = RecipePaginator(page_size)
