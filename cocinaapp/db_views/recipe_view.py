@@ -79,10 +79,11 @@ def random_filter(request):
 
 
     recipes = Recipe.objects.all()
+    length = recipes.count()
     page_size = request.query_params.get('page_size', False)
     if page_size:
         recipe_paginator = RecipePaginator(page_size)
-        response = recipe_paginator.generate_response(recipes, RecipeSerializer, request)
+        response = recipe_paginator.generate_response(recipes, RecipeSerializer, request, length)
         return response
     return JsonResponse({'error': 'The page_size must be in the path values.'}, status=status.HTTP_400_BAD_REQUEST)
 

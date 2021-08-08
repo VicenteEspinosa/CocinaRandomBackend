@@ -13,8 +13,8 @@ class RecipePaginator(PageNumberPagination):
         self.last_page = 0 # The last page that you can access
 
 
-    def generate_response(self, query_set, serializer_obj, request):
-        recipe_count = len(list(Recipe.objects.all()))
+    def generate_response(self, query_set, serializer_obj, request, length):
+        recipe_count = length
         self.last_page = math.ceil(recipe_count / int(self.page_size))
 
         try:
