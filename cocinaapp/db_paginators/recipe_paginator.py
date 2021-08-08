@@ -14,7 +14,7 @@ class RecipePaginator(PageNumberPagination):
 
 
     def generate_response(self, query_set, serializer_obj, request):
-        recipe_count = Recipe.objects.all().count()
+        recipe_count = len(list(Recipe.objects.all()))
         self.last_page = math.ceil(recipe_count / int(self.page_size))
 
         try:

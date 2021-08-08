@@ -62,9 +62,7 @@ def random_recipe(request):
     """Pick random recipe."""
 
     last_recipe = request.query_params.get('last', False)
-    recipes = list(Recipe.objects.all())
-    if last_recipe in recipes:
-        recipes.remove(last_recipe)
+    recipes = list(Recipe.objects.filter(~Q(id=last_recipe)))
     random_recipe = random.choice(recipes)
     recipe_serializer = RecipeSerializer(random_recipe)
     return JsonResponse(recipe_serializer.data, status=status.HTTP_200_OK)
