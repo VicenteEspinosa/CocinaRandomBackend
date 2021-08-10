@@ -8,3 +8,4 @@ class Recipe(models.Model):
     description = models.TextField()
     categories = models.JSONField() # Lista de strings
     image =  models.URLField()
+    ingredient = models.IntegerField()
