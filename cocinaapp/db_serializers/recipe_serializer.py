@@ -6,6 +6,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     """Recipe serializer."""
 
     categories = serializers.JSONField(required=True)
+    ingredients = serializers.JSONField(required=True)
 
     class Meta:
         """Meta."""
@@ -16,21 +17,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "categories",
+            "ingredients",
             "image"
         )
-
-# class BlockPutSerializer(serializers.ModelSerializer):
-#     """Block serializer without for_form and category."""
-
-#     questions = serializers.JSONField(required=False)
-
-#     class Meta:
-#         """Meta."""
-
-#         model = Block
-#         fields = (
-#             "id",
-#             "name",
-#             "status",
-#             "questions"
-#         )
