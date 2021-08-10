@@ -45,7 +45,7 @@ def recipe_list(request):
     # recipes/
 
     if request.method == 'GET':
-        recipes = Recipe.objects.all()
+        recipes = Recipe.objects.all().order_by('name')
         recipe_serializer = RecipeSerializer(recipes, many=True)
         return JsonResponse(get_indexed_json(recipe_serializer.data), safe=False, status=status.HTTP_200_OK)
 
@@ -83,7 +83,7 @@ def random_filter(request):
     # ingredientes
 
 
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.all().order_by('name')
     length = len(recipes)
     page_size = request.query_params.get('page_size', False)
     if page_size:
