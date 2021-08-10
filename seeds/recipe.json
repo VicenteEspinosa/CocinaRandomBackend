@@ -1,0 +1,57 @@
+[
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 1,
+    "fields": {
+      "name": "Primera receta",
+      "description": "Esta es la primera receta",
+      "categories": ["1", "6"],
+      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
+      "ingredient": 1
+    }
+  },
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 2,
+    "fields": {
+      "name": "Segunda receta",
+      "description": "Esta es la segunda receta",
+      "categories": ["1", "7"],
+      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
+      "ingredient": 1
+    }
+  },
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 3,
+    "fields": {
+      "name": "Tercera receta",
+      "description": "Esta es la tercera receta",
+      "categories": ["1", "8"],
+      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
+      "ingredient": 1
+    }
+  },
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 4,
+    "fields": {
+      "name": "Cuarta receta",
+      "description": "Esta es la cuarta receta",
+      "categories": ["1", "8"],
+      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
+      "ingredient": 1
+    }
+  },
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 6,
+    "fields": {
+      "name": "Quinta receta",
+      "description": "Esta es la quinta receta",
+      "categories": ["1", "9"],
+      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
+      "ingredient": 1
+    }
+  }
+]
