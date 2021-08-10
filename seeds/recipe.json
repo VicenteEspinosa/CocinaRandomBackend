@@ -7,7 +7,7 @@
       "description": "Esta es la primera receta",
       "categories": ["1", "6"],
       "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredient": 1
+      "ingredients": ["1"]
     }
   },
   {
@@ -18,7 +18,7 @@
       "description": "Esta es la segunda receta",
       "categories": ["1", "7"],
       "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredient": 1
+      "ingredients": ["1"]
     }
   },
   {
@@ -29,7 +29,7 @@
       "description": "Esta es la tercera receta",
       "categories": ["1", "8"],
       "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredient": 1
+      "ingredients": ["1"]
     }
   },
   {
@@ -40,7 +40,7 @@
       "description": "Esta es la cuarta receta",
       "categories": ["1", "8"],
       "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredient": 1
+      "ingredients": ["1"]
     }
   },
   {
@@ -51,7 +51,7 @@
       "description": "Esta es la quinta receta",
       "categories": ["1", "9"],
       "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredient": 1
+      "ingredients": ["1"]
     }
   }
 ]
