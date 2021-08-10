@@ -15,7 +15,7 @@ def filter_query(request):
     if ingredients:
         ingredients = str(ingredients).split(",")
         for recipe in recipes.copy():
-            if not check_repeated(recipe.ingedientes, ingredients):
+            if not check_repeated(recipe.ingredients, ingredients):
                 recipes.remove(recipe)
     return recipes
 
