@@ -10,7 +10,7 @@ from cocinaapp.db_helpers.recipe_helpers import (
     filter_query,
     stringify_list,
     check_ingredients_exist,
-    process_ingredients
+    process_ingredients_and_categories
 )
 import random
 from django.db.models import Q
@@ -53,7 +53,7 @@ def recipe_list(request):
         recipes = Recipe.objects.all().order_by('name')
         recipe_serializer = RecipeSerializer(recipes, many=True)
         data = recipe_serializer.data
-        data = process_ingredients(data)
+        data = process_ingredients_and_categories(data)
         return JsonResponse(get_indexed_json(data), safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
@@ -79,19 +79,15 @@ def random_recipe(request):
     recipes = list(Recipe.objects.filter(~Q(id=last_recipe)))
     random_recipe = random.choice(recipes)
     recipe_serializer = RecipeSerializer(random_recipe)
-    return JsonResponse(recipe_serializer.data, status=status.HTTP_200_OK)
+    data = recipe_serializer.data
+    data = process_ingredients_and_categories(data)
+    return JsonResponse(data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
 def random_filter(request):
     """Pick random recipe/s with filters."""
     # recipe_filter_random/
-
-    parameters = request.query_params
-    # Parametros:
-    # categoria
-    # ingredientes
-
 
     recipes = Recipe.objects.all().order_by('name')
     length = len(recipes)
@@ -107,11 +103,6 @@ def random_filter(request):
 def paginated_recipes(request):
     """Pick random recipe/s with filters."""
     # recipes_paginated/
-
-    parameters = request.query_params
-    # Parametros:
-    # categoria
-    # ingredientes
 
     recipes = filter_query(request)
     length = len(recipes)

@@ -43,7 +43,7 @@ def check_ingredients_exist(ingredient_list):
             return False
     return True
 
-def process_ingredients(data):
+def process_ingredients_and_categories(data):
     ingredients = {}
     for ingredient in Ingredient.objects.all():
         ingredients[str(ingredient.id)] = ingredient.name

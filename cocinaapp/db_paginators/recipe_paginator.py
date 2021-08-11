@@ -4,6 +4,10 @@ from rest_framework.pagination import PageNumberPagination # Any other type work
 from rest_framework.response import Response
 from cocinaapp.db_models.recipe import Recipe
 import math
+from cocinaapp.db_helpers.recipe_helpers import (
+    process_ingredients_and_categories
+)
+from cocinaapp.db_helpers.json_helpers import get_indexed_json
 
 class RecipePaginator(PageNumberPagination):
 
@@ -26,6 +30,8 @@ class RecipePaginator(PageNumberPagination):
 
 
         data = serialized_page.data # add the get_indexed_json here
+        data = process_ingredients_and_categories(data)
+        data = get_indexed_json(data)
         return self.get_paginated_response(data)
 
 
