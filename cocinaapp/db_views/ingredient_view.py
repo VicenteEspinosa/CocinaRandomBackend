@@ -3,7 +3,6 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.http.response import JsonResponse
 from cocinaapp.db_models.ingredient import Ingredient
-from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.ingredient_serializer import IngredientSerializer
 from cocinaapp.db_helpers.json_helpers import get_indexed_json
 from cocinaapp.db_helpers.ingredient_helpers import check_repeated_ingredient
