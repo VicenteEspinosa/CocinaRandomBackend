@@ -42,3 +42,29 @@ def check_ingredients_exist(ingredient_list):
         except Ingredient.DoesNotExist:
             return False
     return True
+
+def process_ingredients(data):
+    ingredients = {}
+    for ingredient in Ingredient.objects.all():
+        ingredients[str(ingredient.id)] = ingredient.name
+
+    # for category in Category.objects.all():
+    #     categories[str(category.id)] = category.name
+
+    for recipe in data:
+        ingredient_dictionary = {}
+        for ingredient_id in recipe["ingredients"]:
+            try:
+                ingredient_dictionary[ingredient_id] = ingredients[ingredient_id]
+            except KeyError:
+                pass
+        recipe["ingredients"] = ingredient_dictionary
+
+        # category_dictionary = {}
+        # for cateogry_id in recipe["categories"]:
+        #     try:
+        #         category_dictionary[cateogry_id] = categories[cateogry_id]
+        #     except KeyError:
+        #         pass
+        # recipe["categories"] = category_dictionary
+    return data

@@ -9,5 +9,3 @@ class Recipe(models.Model):
     categories = models.JSONField() # Lista de strings
     ingredients = models.JSONField()
     image =  models.URLField()
-
-    # Cambiar a ingredients
