@@ -1,5 +1,6 @@
-from cocinaapp.db_models.recipe import Recipe
+from cocinaapp.db_models.category import Category
 from cocinaapp.db_models.ingredient import Ingredient
+from cocinaapp.db_models.recipe import Recipe
 
 
 def filter_query(request):
@@ -43,28 +44,44 @@ def check_ingredients_exist(ingredient_list):
             return False
     return True
 
+def check_categories_exist(category_list):
+    for category_id in category_list:
+        try:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
+            return False
+    return True
+
 def process_ingredients_and_categories(data):
     ingredients = {}
     for ingredient in Ingredient.objects.all():
-        ingredients[str(ingredient.id)] = ingredient.name
+        ingredients[str(ingredient.id)] = ingredient
 
-    # for category in Category.objects.all():
-    #     categories[str(category.id)] = category.name
+    categories = {}
+    for category in Category.objects.all():
+        categories[str(category.id)] = category
 
     for recipe in data:
         ingredient_dictionary = {}
         for ingredient_id in recipe["ingredients"]:
             try:
-                ingredient_dictionary[ingredient_id] = ingredients[ingredient_id]
+                ingredient_dictionary[ingredient_id] = {
+                        "id": ingredient_id,
+                        "name": ingredients[ingredient_id].name,
+                    }
             except KeyError:
                 pass
         recipe["ingredients"] = ingredient_dictionary
 
-        # category_dictionary = {}
-        # for cateogry_id in recipe["categories"]:
-        #     try:
-        #         category_dictionary[cateogry_id] = categories[cateogry_id]
-        #     except KeyError:
-        #         pass
-        # recipe["categories"] = category_dictionary
+        category_dictionary = {}
+        for category_id in recipe["categories"]:
+            try:
+                category_dictionary[category_id] = {
+                    "id": category_id,
+                    "name": categories[category_id].name,
+                    "color": categories[category_id].color
+                }
+            except KeyError:
+                pass
+        recipe["categories"] = category_dictionary
     return data
