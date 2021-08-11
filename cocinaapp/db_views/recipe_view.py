@@ -6,7 +6,11 @@ from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.recipe_serializer import RecipeSerializer
 from cocinaapp.db_paginators.recipe_paginator import RecipePaginator
 from cocinaapp.db_helpers.json_helpers import get_indexed_json
-from cocinaapp.db_helpers.recipe_helpers import filter_query, stringify_list
+from cocinaapp.db_helpers.recipe_helpers import (
+    filter_query,
+    stringify_list,
+    check_ingredients_exist
+)
 import random
 from django.db.models import Q
 
@@ -53,10 +57,13 @@ def recipe_list(request):
         recipe_data = JSONParser().parse(request)
         recipe_serializer = RecipeSerializer(data=recipe_data)
         if recipe_serializer.is_valid():
-            recipe = recipe_serializer.save()
-            recipe.categories = stringify_list(recipe.categories)
-            recipe.save()
-            return JsonResponse(recipe_serializer.data, status=status.HTTP_201_CREATED)
+            print(recipe_data["ingredients"])
+            if check_ingredients_exist(recipe_data["ingredients"]):
+                recipe = recipe_serializer.save()
+                recipe.categories = stringify_list(recipe.categories)
+                recipe.save()
+                return JsonResponse(recipe_serializer.data, safe=False, status=status.HTTP_201_CREATED)
+            return JsonResponse({'error': 'Some ingredients do not exist'}, status=status.HTTP_400_BAD_REQUEST)
         return JsonResponse(recipe_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

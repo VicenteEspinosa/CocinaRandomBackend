@@ -1,4 +1,5 @@
 from cocinaapp.db_models.recipe import Recipe
+from cocinaapp.db_models.ingredient import Ingredient
 
 
 def filter_query(request):
@@ -33,3 +34,11 @@ def stringify_list(list_input):
     for element in list_input:
         new_list.append(str(element))
     return new_list
+
+def check_ingredients_exist(ingredient_list):
+    for ingredient_id in ingredient_list:
+        try:
+            ingredient = Ingredient.objects.get(id=ingredient_id)
+        except Ingredient.DoesNotExist:
+            return False
+    return True
