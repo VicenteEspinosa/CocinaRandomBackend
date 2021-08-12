@@ -4,7 +4,6 @@ from rest_framework import status
 from django.http.response import JsonResponse
 from cocinaapp.db_models.ingredient import Ingredient
 from cocinaapp.db_serializers.ingredient_serializer import IngredientSerializer
-from cocinaapp.db_helpers.json_helpers import get_indexed_json
 from cocinaapp.db_helpers.ingredient_helpers import check_repeated_ingredient
 
 
@@ -16,7 +15,7 @@ def ingredient_list(request):
     if request.method == 'GET':
         ingredients = Ingredient.objects.all().order_by('name')
         ingredients_serializer = IngredientSerializer(ingredients, many=True)
-        return JsonResponse(get_indexed_json(ingredients_serializer.data), safe=False, status=status.HTTP_200_OK)
+        return JsonResponse(ingredients_serializer.data, safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         ingredient_data = JSONParser().parse(request)

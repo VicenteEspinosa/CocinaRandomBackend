@@ -62,26 +62,60 @@ def process_ingredients_and_categories(data):
         categories[str(category.id)] = category
 
     for recipe in data:
-        ingredient_dictionary = {}
-        for ingredient_id in recipe["ingredients"]:
+        ingredient_list = []
+        for ingredient_id in recipe['ingredients']:
             try:
-                ingredient_dictionary[ingredient_id] = {
+                ingredient_list.append({
                         "id": ingredient_id,
                         "name": ingredients[ingredient_id].name,
-                    }
+                    })
             except KeyError:
                 pass
-        recipe["ingredients"] = ingredient_dictionary
+        recipe["ingredients"] = ingredient_list
 
-        category_dictionary = {}
+        category_list = []
         for category_id in recipe["categories"]:
             try:
-                category_dictionary[category_id] = {
+                category_list.append({
                     "id": category_id,
                     "name": categories[category_id].name,
                     "color": categories[category_id].color
-                }
+                })
             except KeyError:
                 pass
-        recipe["categories"] = category_dictionary
+        recipe["categories"] = category_list
+    return data
+
+
+def process_ingredients_and_categories_one(data):
+    ingredients = {}
+    for ingredient in Ingredient.objects.all():
+        ingredients[str(ingredient.id)] = ingredient
+
+    categories = {}
+    for category in Category.objects.all():
+        categories[str(category.id)] = category
+
+    ingredient_list = []
+    for ingredient_id in data["ingredients"]:
+        try:
+            ingredient_list.append({
+                    "id": ingredient_id,
+                    "name": ingredients[ingredient_id].name,
+                })
+        except KeyError:
+            pass
+    data["ingredients"] = ingredient_list
+
+    category_list = []
+    for category_id in data["categories"]:
+        try:
+            category_list.append({
+                "id": category_id,
+                "name": categories[category_id].name,
+                "color": categories[category_id].color
+            })
+        except KeyError:
+            pass
+    data["categories"] = category_list
     return data

@@ -5,13 +5,13 @@ from django.http.response import JsonResponse
 from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.recipe_serializer import RecipeSerializer
 from cocinaapp.db_paginators.recipe_paginator import RecipePaginator
-from cocinaapp.db_helpers.json_helpers import get_indexed_json
 from cocinaapp.db_helpers.recipe_helpers import (
     filter_query,
     stringify_list,
     check_categories_exist,
     check_ingredients_exist,
-    process_ingredients_and_categories
+    process_ingredients_and_categories,
+    process_ingredients_and_categories_one
 )
 import random
 from django.db.models import Q
@@ -55,7 +55,7 @@ def recipe_list(request):
         recipe_serializer = RecipeSerializer(recipes, many=True)
         data = recipe_serializer.data
         data = process_ingredients_and_categories(data)
-        return JsonResponse(get_indexed_json(data), safe=False, status=status.HTTP_200_OK)
+        return JsonResponse(data, safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         recipe_data = JSONParser().parse(request)
@@ -83,7 +83,7 @@ def random_recipe(request):
     random_recipe = random.choice(recipes)
     recipe_serializer = RecipeSerializer(random_recipe)
     data = recipe_serializer.data
-    data = process_ingredients_and_categories(data)
+    data = process_ingredients_and_categories_one(data)
     return JsonResponse(data, status=status.HTTP_200_OK)
 
 
