@@ -6,9 +6,15 @@ from cocinaapp.db_models.recipe import Recipe
 def filter_query(request):
     
     recipes = list(Recipe.objects.all().order_by('name'))
+
+    name = request.query_params.get('name', False)
     categories = request.query_params.get('categories', False)
     ingredients = request.query_params.get('ingredients', False)
 
+    if name:
+        for recipe in recipes.copy():
+            if not (name.lower() in recipe.name.lower()):
+                recipes.remove(recipe)
     if categories:
         categories = str(categories).split(",")
         for recipe in recipes.copy():
