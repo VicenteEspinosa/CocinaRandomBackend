@@ -1,6 +1,7 @@
 from cocinaapp.db_models.category import Category
 from cocinaapp.db_models.ingredient import Ingredient
 from cocinaapp.db_models.recipe import Recipe
+from unicodedata import normalize
 
 
 def filter_query(request):
@@ -12,8 +13,10 @@ def filter_query(request):
     ingredients = request.query_params.get('ingredients', False)
 
     if name:
+        trans_tab = dict.fromkeys(map(ord, u'\u0301\u0308'), None)
+        name = normalize('NFKC', normalize('NFKD', name).translate(trans_tab))
         for recipe in recipes.copy():
-            if not (name.lower() in recipe.name.lower()):
+            if not (name.lower() in normalize('NFKC', normalize('NFKD', recipe.name).translate(trans_tab)).lower()):
                 recipes.remove(recipe)
     if categories:
         categories = str(categories).split(",")
