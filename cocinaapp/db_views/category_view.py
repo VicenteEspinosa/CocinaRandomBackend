@@ -4,7 +4,6 @@ from rest_framework import status
 from django.http.response import JsonResponse
 from cocinaapp.db_models.category import Category
 from cocinaapp.db_serializers.category_serializer import CategorySerializer
-from cocinaapp.db_helpers.json_helpers import get_indexed_json
 from cocinaapp.db_helpers.category_helpers import check_repeated_category
 
 
@@ -16,7 +15,7 @@ def category_list(request):
     if request.method == 'GET':
         categories = Category.objects.all().order_by('name')
         categories_serializer = CategorySerializer(categories, many=True)
-        return JsonResponse(get_indexed_json(categories_serializer.data), safe=False, status=status.HTTP_200_OK)
+        return JsonResponse(categories_serializer.data, safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         category_data = JSONParser().parse(request)

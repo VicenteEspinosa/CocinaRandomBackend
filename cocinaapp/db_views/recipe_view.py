@@ -5,7 +5,6 @@ from django.http.response import JsonResponse
 from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.recipe_serializer import RecipeSerializer
 from cocinaapp.db_paginators.recipe_paginator import RecipePaginator
-from cocinaapp.db_helpers.json_helpers import get_indexed_json
 from cocinaapp.db_helpers.recipe_helpers import (
     filter_query,
     stringify_list,
