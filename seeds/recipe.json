@@ -3,55 +3,48 @@
     "model": "cocinaapp.recipe",
     "pk": 1,
     "fields": {
-      "name": "Primera receta",
-      "description": "Esta es la primera receta",
-      "categories": ["1", "6"],
-      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredients": ["1"]
+      "name": "Arroz chaufa",
+      "description": "Uso pollo y camarones",
+      "categories": ["5", "6"],
+      "links": ["https://es.cravingsjournal.com/arroz-chaufa-de-pollo/"],
+      "image": "https://www.gourmet.cl/wp-content/uploads/2019/04/Arroz-chaufa-edit-2.jpg",
+      "ingredients": ["1", "2", "3", "4", "5", "6"]
     }
   },
   {
     "model": "cocinaapp.recipe",
     "pk": 2,
     "fields": {
-      "name": "Segunda receta",
-      "description": "Esta es la segunda receta",
-      "categories": ["1", "7"],
-      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredients": ["1"]
+      "name": "Guiso de atún",
+      "description": "Hacer la crema de tomate en 2 tazas de leche",
+      "categories": ["3"],
+      "links": [],
+      "image": "https://img-global.cpcdn.com/recipes/016fd26e6c51c4a2/680x482cq70/guiso-de-atun-en-lata-foto-principal.webp",
+      "ingredients": ["10", "11", "12", "13"]
     }
   },
   {
     "model": "cocinaapp.recipe",
     "pk": 3,
     "fields": {
-      "name": "Tercera receta",
-      "description": "Esta es la tercera receta",
-      "categories": ["1", "8"],
-      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredients": ["1"]
+      "name": "Lasaña",
+      "description": "Uso lasaña precocida",
+      "categories": ["1"],
+      "links": [],
+      "image": "https://dam.cocinafacil.com.mx/wp-content/uploads/2020/12/lasa%C3%B1a-receta.jpg",
+      "ingredients": ["14", "15", "16"]
     }
   },
   {
     "model": "cocinaapp.recipe",
     "pk": 4,
     "fields": {
-      "name": "Cuarta receta",
+      "name": "Pescado al horno",
       "description": "Esta es la cuarta receta",
-      "categories": ["1", "8"],
-      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredients": ["1"]
-    }
-  },
-  {
-    "model": "cocinaapp.recipe",
-    "pk": 6,
-    "fields": {
-      "name": "Quinta receta",
-      "description": "Esta es la quinta receta",
-      "categories": ["1", "9"],
-      "image": "https://doncucharon.com/fotos/recetas/144/pastel-de-choclo.jpg",
-      "ingredients": ["1"]
+      "categories": ["3"],
+      "links": [],
+      "image": "https://cdn7.kiwilimon.com/recetaimagen/20214/640x426/th5-640x426-8404.jpg.webp",
+      "ingredients": ["17", "18", "19", "5", "6"]
     }
   }
 ]
