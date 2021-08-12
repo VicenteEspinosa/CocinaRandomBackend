@@ -15,7 +15,16 @@ def category_list(request):
     if request.method == 'GET':
         categories = Category.objects.all().order_by('name')
         categories_serializer = CategorySerializer(categories, many=True)
-        return JsonResponse(categories_serializer.data, safe=False, status=status.HTTP_200_OK)
+        data = categories_serializer.data
+        lista = []
+        for element in data:
+            lista.append(
+                {
+                    "label": element["name"],
+                    "value": element["id"]
+                }
+            )
+        return JsonResponse(lista, safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         category_data = JSONParser().parse(request)
