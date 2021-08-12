@@ -7,6 +7,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     categories = serializers.JSONField(required=True)
     ingredients = serializers.JSONField(required=True)
+    links = serializers.JSONField(required=True)
 
     class Meta:
         """Meta."""
@@ -18,5 +19,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             "description",
             "categories",
             "ingredients",
+            "links",
             "image"
         )
