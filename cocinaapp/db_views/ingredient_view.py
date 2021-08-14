@@ -15,7 +15,16 @@ def ingredient_list(request):
     if request.method == 'GET':
         ingredients = Ingredient.objects.all().order_by('name')
         ingredients_serializer = IngredientSerializer(ingredients, many=True)
-        return JsonResponse(ingredients_serializer.data, safe=False, status=status.HTTP_200_OK)
+        data = ingredients_serializer.data
+        lista = []
+        for element in data:
+            lista.append(
+                {
+                    "label": element["name"],
+                    "value": element["id"]
+                }
+            )
+        return JsonResponse(lista, safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         ingredient_data = JSONParser().parse(request)
