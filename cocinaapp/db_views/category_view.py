@@ -21,7 +21,8 @@ def category_list(request):
             lista.append(
                 {
                     "label": element["name"],
-                    "value": element["id"]
+                    "value": element["id"],
+                    "color": element["color"]
                 }
             )
         return JsonResponse(lista, safe=False, status=status.HTTP_200_OK)
