@@ -4,7 +4,10 @@ from rest_framework import status
 from django.http.response import JsonResponse
 from cocinaapp.db_models.recipe import Recipe
 from cocinaapp.db_serializers.recipe_serializer import RecipeSerializer
+from cocinaapp.db_models.ingredient import Ingredient
+from cocinaapp.db_serializers.ingredient_serializer import IngredientSerializer
 from cocinaapp.db_paginators.recipe_paginator import RecipePaginator
+from cocinaapp.db_helpers.ingredient_helpers import check_repeated_ingredient
 from cocinaapp.db_helpers.recipe_helpers import (
     filter_query,
     stringify_list,
@@ -59,16 +62,41 @@ def recipe_list(request):
 
     elif request.method == 'POST':
         recipe_data = JSONParser().parse(request)
+        for new_ingredient_name in recipe_data["new"]:
+            ingredient_data = {"name": new_ingredient_name.capitalize()}
+            if check_repeated_ingredient(ingredient_data["name"]):
+                ingredient_serializer = IngredientSerializer(data=ingredient_data)
+                if ingredient_serializer.is_valid():
+                    ingredient = ingredient_serializer.save()
+                    ingredient.save()
+                    recipe_data["ingredients"].append(ingredient.id)
         recipe_serializer = RecipeSerializer(data=recipe_data)
         if recipe_serializer.is_valid():
             if check_ingredients_exist(recipe_data["ingredients"]):
                 if check_categories_exist(recipe_data["categories"]):
+                    if "new" in recipe_data:
+                        for new_ingredient_name in recipe_data["new"]:
+                            ingredient_data = {"name": new_ingredient_name.capitalize()}
+                            if check_repeated_ingredient(ingredient_data["name"]):
+                                ingredient_serializer = IngredientSerializer(data=ingredient_data)
+                                if ingredient_serializer.is_valid():
+                                    ingredient = ingredient_serializer.save()
+                                    ingredient.save()
+                                    recipe_data["ingredients"].append(ingredient.id)
+                else:
+                    return JsonResponse({'error': 'Some categories do not exist'}, status=status.HTTP_400_BAD_REQUEST)
+            else: 
+                return JsonResponse({'error': 'Some ingredients do not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return JsonResponse(recipe_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        recipe_serializer = RecipeSerializer(data=recipe_data)
+        if recipe_serializer.is_valid():
+            if check_ingredients_exist(recipe_data["ingredients"]):
                     recipe = recipe_serializer.save()
                     recipe.categories = stringify_list(recipe.categories)
                     recipe.ingredients = stringify_list(recipe.ingredients)
                     recipe.save()
                     return JsonResponse(recipe_serializer.data, safe=False, status=status.HTTP_201_CREATED)
-                return JsonResponse({'error': 'Some categories do not exist'}, status=status.HTTP_400_BAD_REQUEST)
             return JsonResponse({'error': 'Some ingredients do not exist'}, status=status.HTTP_400_BAD_REQUEST)
         return JsonResponse(recipe_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
