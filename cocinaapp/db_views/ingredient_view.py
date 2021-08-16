@@ -43,7 +43,7 @@ def ingredient_list(request):
         return JsonResponse({"error": "repeated ingredient"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def ingredient_one(request, pk):
     """Work with one ingredient."""
     # ingredient/<pk>/
@@ -67,5 +67,6 @@ def ingredient_one(request, pk):
         return JsonResponse(ingredient_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        pass
+        ingredient.delete()
+        return JsonResponse({'message': 'Ingredient was deleted successfully!'}, status=status.HTTP_200_OK)
         
