@@ -30,7 +30,9 @@ def recipe_one(request, pk):
 
         if request.method == 'GET':
             recipe_serializer = RecipeSerializer(recipe)
-            return JsonResponse(recipe_serializer.data, status=status.HTTP_200_OK)
+            data = recipe_serializer.data
+            data = process_ingredients_and_categories_one(data)
+            return JsonResponse(data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'PATCH':
             recipe_data = JSONParser().parse(request)
