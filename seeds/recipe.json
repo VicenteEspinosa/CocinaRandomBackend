@@ -5,10 +5,10 @@
     "fields": {
       "name": "Arroz chaufa",
       "description": "Uso pollo y camarones",
-      "categories": ["5", "6"],
-      "links": ["https://es.cravingsjournal.com/arroz-chaufa-de-pollo/"],
-      "image": "https://www.gourmet.cl/wp-content/uploads/2019/04/Arroz-chaufa-edit-2.jpg",
-      "ingredients": ["1", "2", "3", "4", "5", "6"]
+      "categories": "['5', '6']",
+      "ingredients": "['1', '2', '3', '4', '5', '6']",
+      "links": "['https://es.cravingsjournal.com/arroz-chaufa-de-pollo/']",
+      "image": "https://www.gourmet.cl/wp-content/uploads/2019/04/Arroz-chaufa-edit-2.jpg"
     }
   },
   {
@@ -17,34 +17,58 @@
     "fields": {
       "name": "Guiso de atún",
       "description": "Hacer la crema de tomate en 2 tazas de leche",
-      "categories": ["3"],
-      "links": [],
-      "image": "https://img-global.cpcdn.com/recipes/016fd26e6c51c4a2/680x482cq70/guiso-de-atun-en-lata-foto-principal.webp",
-      "ingredients": ["10", "11", "12", "13"]
+      "categories": "['3']",
+      "ingredients": "['10', '11', '12', '13']",
+      "links": "[]",
+      "image": "https://img-global.cpcdn.com/recipes/016fd26e6c51c4a2/680x482cq70/guiso-de-atun-en-lata-foto-principal.webp"
     }
   },
   {
     "model": "cocinaapp.recipe",
     "pk": 3,
     "fields": {
-      "name": "Lasaña",
-      "description": "Uso lasaña precocida",
-      "categories": ["1"],
-      "links": [],
-      "image": "https://dam.cocinafacil.com.mx/wp-content/uploads/2020/12/lasa%C3%B1a-receta.jpg",
-      "ingredients": ["14", "15", "16"]
+      "name": "Ají de Gallina",
+      "description": "acompañar con arroz blanco y huevo duro",
+      "categories": "['5']",
+      "ingredients": "['1', '39', '44', '40']",
+      "links": "['']",
+      "image": "https://unacomidaperuana.com/wp-content/uploads/2019/09/aji-de-gallina.jpg.webp"
     }
   },
   {
     "model": "cocinaapp.recipe",
     "pk": 4,
     "fields": {
-      "name": "Pescado al horno",
-      "description": "Esta es la cuarta receta",
-      "categories": ["3"],
-      "links": [],
-      "image": "https://cdn7.kiwilimon.com/recetaimagen/20214/640x426/th5-640x426-8404.jpg.webp",
-      "ingredients": ["17", "18", "19", "5", "6"]
+      "name": "Pasta con morron",
+      "description": "agregar queso rallado",
+      "categories": "['1']",
+      "ingredients": "['19', '6', '18']",
+      "links": "['https://www.instagram.com/tv/B_lQf27nVBf/?utm_source=ig_web_copy_link']",
+      "image": "https://i.pinimg.com/564x/d2/d2/8e/d2d28e47beea17e2af9d2af80bb4f108.jpg"
+    }
+  },
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 5,
+    "fields": {
+      "name": "Pastel de papas",
+      "description": "preparar un pure",
+      "categories": "['4']",
+      "ingredients": "['11', '46', '47']",
+      "links": "['']",
+      "image": "https://www.papachile.cl/wp-content/uploads/2021/04/0ams9wq6lqgvcjqipi0jjc80m7i1ss6d_ImageHandler.jpg"
+    }
+  },
+  {
+    "model": "cocinaapp.recipe",
+    "pk": 6,
+    "fields": {
+      "name": "Lasaña de Berenjenas",
+      "description": "armar como una lasaña. Puede ser sin carne",
+      "categories": "['7', '4']",
+      "ingredients": "['15', '14', '48', '49']",
+      "links": "['']",
+      "image": "https://www.annarecetasfaciles.com/files/berenjenas-a-la-parmesana-1-1.jpg"
     }
   }
 ]

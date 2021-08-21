@@ -14,11 +14,11 @@ from cocinaapp.db_helpers.recipe_helpers import (
     check_categories_exist,
     check_ingredients_exist,
     process_ingredients_and_categories,
-    process_ingredients_and_categories_one
+    process_ingredients_and_categories_one,
+    UploadImage
 )
 import random
 from django.db.models import Q
-
 
 @api_view(['GET', 'PATCH', 'DELETE'])
 def recipe_one(request, pk):
@@ -63,6 +63,7 @@ def recipe_list(request):
         return JsonResponse(data, safe=False, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
+
         recipe_data = JSONParser().parse(request)
         for new_ingredient_name in recipe_data["new"]:
             ingredient_data = {"name": new_ingredient_name.capitalize()}
@@ -97,6 +98,7 @@ def recipe_list(request):
                     recipe = recipe_serializer.save()
                     recipe.categories = stringify_list(recipe.categories)
                     recipe.ingredients = stringify_list(recipe.ingredients)
+                    recipe.image = UploadImage(recipe_data["file"], recipe.id)
                     recipe.save()
                     return JsonResponse(recipe_serializer.data, safe=False, status=status.HTTP_201_CREATED)
             return JsonResponse({'error': 'Some ingredients do not exist'}, status=status.HTTP_400_BAD_REQUEST)

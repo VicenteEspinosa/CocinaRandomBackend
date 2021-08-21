@@ -2,6 +2,10 @@ from cocinaapp.db_models.category import Category
 from cocinaapp.db_models.ingredient import Ingredient
 from cocinaapp.db_models.recipe import Recipe
 from unicodedata import normalize
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from config import CLOUD_NAME, API_KEY, API_SECRET
 
 
 def filter_query(request):
@@ -128,3 +132,23 @@ def process_ingredients_and_categories_one(data):
             pass
     data["categories"] = category_list
     return data
+
+def UploadImage(file, recipe_id):
+    
+    cloudinary.config(
+        cloud_name = CLOUD_NAME, 
+        api_key = API_KEY, 
+        api_secret = API_SECRET,
+        secure = True
+    )
+    
+    folder = "Cocina/recipe_pictures/"
+    
+    cloudinary.uploader.upload(file,
+    folder = folder,
+    public_id = recipe_id,
+    overwrite = True,
+    notification_url = "https://mysite.example.com/notify_endpoint", 
+    resource_type = "image")
+    
+    return f"https://res.cloudinary.com/{CLOUD_NAME}/{folder}{recipe_id}"
