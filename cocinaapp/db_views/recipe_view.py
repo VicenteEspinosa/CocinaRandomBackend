@@ -15,7 +15,8 @@ from cocinaapp.db_helpers.recipe_helpers import (
     check_ingredients_exist,
     process_ingredients_and_categories,
     process_ingredients_and_categories_one,
-    UploadImage
+    UploadImage,
+    deleteImage
 )
 import random
 from django.db.models import Q
@@ -43,6 +44,7 @@ def recipe_one(request, pk):
             return JsonResponse(recipe_serializer.data, status=status.HTTP_201_CREATED)
 
         elif request.method == 'DELETE':
+            deleteImage(recipe.image)
             recipe.delete()
             return JsonResponse({'message': 'Recipe was deleted successfully!'}, status=status.HTTP_200_OK)
 
