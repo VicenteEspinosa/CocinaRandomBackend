@@ -134,21 +134,32 @@ def process_ingredients_and_categories_one(data):
     return data
 
 def UploadImage(file, recipe_id):
-    
+
     cloudinary.config(
         cloud_name = CLOUD_NAME, 
         api_key = API_KEY, 
         api_secret = API_SECRET,
         secure = True
     )
-    
+
     folder = "Cocina/recipe_pictures/"
-    
+
     cloudinary.uploader.upload(file,
     folder = folder,
     public_id = recipe_id,
     overwrite = True,
     notification_url = "https://mysite.example.com/notify_endpoint", 
     resource_type = "image")
-    
+
     return f"https://res.cloudinary.com/{CLOUD_NAME}/{folder}{recipe_id}"
+
+def deleteImage(url):
+    cloudinary.config(
+        cloud_name = CLOUD_NAME, 
+        api_key = API_KEY, 
+        api_secret = API_SECRET,
+        secure = True
+    )
+
+    path = url.replace(f"https://res.cloudinary.com/{CLOUD_NAME}/", "")
+    cloudinary.uploader.destroy(path)
