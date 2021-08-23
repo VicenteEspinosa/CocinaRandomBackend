@@ -69,7 +69,7 @@ def recipe_list(request):
         recipe_data = JSONParser().parse(request)
         for new_ingredient_name in recipe_data["new"]:
             ingredient_data = {"name": new_ingredient_name.capitalize()}
-            if check_repeated_ingredient(ingredient_data["name"]):
+            if check_repeated_ingredient(ingredient_data["name"].capitalize()):
                 ingredient_serializer = IngredientSerializer(data=ingredient_data)
                 if ingredient_serializer.is_valid():
                     ingredient = ingredient_serializer.save()
