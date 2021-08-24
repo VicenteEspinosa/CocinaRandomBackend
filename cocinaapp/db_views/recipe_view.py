@@ -67,14 +67,6 @@ def recipe_list(request):
     elif request.method == 'POST':
 
         recipe_data = JSONParser().parse(request)
-        for new_ingredient_name in recipe_data["new"]:
-            ingredient_data = {"name": new_ingredient_name.capitalize()}
-            if check_repeated_ingredient(ingredient_data["name"].capitalize()):
-                ingredient_serializer = IngredientSerializer(data=ingredient_data)
-                if ingredient_serializer.is_valid():
-                    ingredient = ingredient_serializer.save()
-                    ingredient.save()
-                    recipe_data["ingredients"].append(ingredient.id)
         recipe_serializer = RecipeSerializer(data=recipe_data)
         if recipe_serializer.is_valid():
             if check_ingredients_exist(recipe_data["ingredients"]):
@@ -100,7 +92,8 @@ def recipe_list(request):
                     recipe = recipe_serializer.save()
                     recipe.categories = stringify_list(recipe.categories)
                     recipe.ingredients = stringify_list(recipe.ingredients)
-                    recipe.image = UploadImage(recipe_data["file"], recipe.id)
+                    if "file" in recipe_data:
+                        recipe.image = UploadImage(recipe_data["file"], recipe.id)
                     recipe.save()
                     return JsonResponse(recipe_serializer.data, safe=False, status=status.HTTP_201_CREATED)
             return JsonResponse({'error': 'Some ingredients do not exist'}, status=status.HTTP_400_BAD_REQUEST)
